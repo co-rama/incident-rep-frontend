@@ -1,0 +1,31 @@
+<div class="login-page">
+  <!-- Banner Section -->
+  <div class="welcome-section" fxHide fxShow.gt-sm>
+    <h1>Welcome to Incident Report Management System</h1>
+  </div>
+
+  <!-- Login Section -->
+  <div class="login-section">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" name="email" ngModel required />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" ngModel required />
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit">Login</button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>
