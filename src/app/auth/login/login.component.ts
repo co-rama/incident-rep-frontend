@@ -33,12 +33,13 @@ export class LoginComponent {
       const subscription = this.authService.login(authData).subscribe({
         next: () => {
           this.loadingState = false;
-          this.router.navigateByUrl('/dashboard');
+          this.toastr.success('Login Success', 'Info');
+          this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           this.loadingState = false;
-          console.log(error.error.message);
-          this.toastr.error('Error toastr');
+          const message = error.error.message;
+          this.toastr.error(message, 'Error:');
         },
       });
 
