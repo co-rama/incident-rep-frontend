@@ -1,0 +1,14 @@
+<mat-toolbar class="mat-elevation-z3">
+  <button mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" [style.width]="'250px'">
+    <app-left-sidebar />
+  </mat-sidenav>
+  <mat-sidenav-content class="content">
+    <!-- Here is where we load our children -->
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>
