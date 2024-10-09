@@ -33,6 +33,11 @@ mat-card-header {
   margin: 2px;
   width: 100%;
 }
+
+mat-card-actions {
+  // display: grid;
+  align-items: end;
+}
 @media (max-width: 600px) {
   .welcome-section {
     display: none;

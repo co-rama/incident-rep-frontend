@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MaterialImportModule } from '../../shared/material-import.module';
+import { AuthService } from '../auth.service';
+import { Auth } from '../login/auth.model';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +14,37 @@ import { MaterialImportModule } from '../../shared/material-import.module';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  private authService = inject(AuthService);
+  private destroyRef = inject(DestroyRef);
+  private toastr = inject(ToastrService);
+  private router = inject(Router);
+  loadingState: boolean = false;
+
   onSubmit(form: NgForm) {
-    throw new Error('Method not implemented.');
+    if (form.invalid) {
+      return;
+    }
+    if (form.valid) {
+      this.loadingState = true;
+      const authData: Auth = {
+        email: form.value.email,
+        password: form.value.password,
+      };
+      const subscription = this.authService.login(authData).subscribe({
+        next: () => {
+          this.loadingState = false;
+          this.router.navigateByUrl('/dashboard');
+        },
+        error: (error) => {
+          this.loadingState = false;
+          console.log(error.error.message);
+          this.toastr.error('Error toastr');
+        },
+      });
+
+      this.destroyRef.onDestroy(() => {
+        subscription.unsubscribe();
+      });
+    }
   }
 }
