@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { MaterialImportModule } from '../../shared/material-import.module';
 import { RouterOutlet } from '@angular/router';
 import { LeftSidebarComponent } from '../left-sidebar/left-sidebar.component';
@@ -10,4 +10,8 @@ import { LeftSidebarComponent } from '../left-sidebar/left-sidebar.component';
   templateUrl: './main-container.component.html',
   styleUrl: './main-container.component.scss',
 })
-export class MainContainerComponent {}
+export class MainContainerComponent {
+  collapsed = signal(false);
+
+  sideNavWidth = computed(() => this.collapsed() ? '65px': '250px')
+}
