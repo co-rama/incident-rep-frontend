@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MaterialImportModule } from '../../../shared/material-import.module';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NewIncident } from '../../../shared/incident.model';
+import { Incident } from '../../../shared/incident.model';
+import { IncidentsService } from '../../../services/incidents.service';
 
 @Component({
   selector: 'app-new-incident',
@@ -18,6 +19,7 @@ export class NewIncidentComponent {
     cost: number;
     specification: string;
   }> = [{ title: '', quantity: 0, cost: 0, specification: '' }];
+  private incidentsService = inject(IncidentsService);
 
   addItem() {
     this.items.push({ title: '', quantity: 0, cost: 0, specification: '' });
@@ -38,7 +40,7 @@ export class NewIncidentComponent {
       specification: item.specification,
     }));
 
-    const newIncident: NewIncident = {
+    const newIncident: Incident = {
       title: newIncidentForm.value.title,
       datetime: newIncidentForm.value.date,
       location: newIncidentForm.value.location,
@@ -48,5 +50,6 @@ export class NewIncidentComponent {
       items: structuredItems,
     };
     // console.log(newIncident);
+    this.incidentsService.AddNewIncident(newIncident).subscribe();
   }
 }

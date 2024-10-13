@@ -1,4 +1,4 @@
-export interface NewIncident {
+export interface Incident {
   title: string;
   datetime: string;
   location: string;
@@ -6,4 +6,6 @@ export interface NewIncident {
   category: string;
   statement: string;
   items: Array<{}>;
+  createdAt?: string;
+  updatedAt?: string;
 }
