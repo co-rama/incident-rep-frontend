@@ -42,7 +42,10 @@ export type MenuItem = {
         (click)="logout()"
         class="logout-btn"
       >
-        <mat-icon>logout</mat-icon> Logout
+        <mat-icon [style.margin-right]="0">logout</mat-icon>
+        @if(!sideNavCollapsed()){
+        <span>Logout</span>
+        }
       </button>
     </div>
   `,

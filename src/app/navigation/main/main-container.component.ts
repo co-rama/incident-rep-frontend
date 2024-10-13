@@ -13,5 +13,5 @@ import { LeftSidebarComponent } from '../left-sidebar/left-sidebar.component';
 export class MainContainerComponent {
   collapsed = signal(false);
 
-  sideNavWidth = computed(() => this.collapsed() ? '65px': '250px')
+  sideNavWidth = computed(() => (this.collapsed() ? '80px' : '250px'));
 }

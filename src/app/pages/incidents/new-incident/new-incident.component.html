@@ -1,0 +1,48 @@
+<section class="new-incident-form">
+  <form #newIncident="ngForm" (ngSubmit)="submitNewIncident()">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>New Incident Report</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-label>Title:</mat-label>
+          <input matInput name="title" ngModel required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Date & Time of Occurence:</mat-label>
+          <input matInput type="datetime" name="datetime" ngModel required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Location:</mat-label>
+          <input matInput name="location" ngModel required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Region:</mat-label>
+          <mat-select name="region" ngModel required="true">
+            <mat-option value="daresalaam">Dar Es Salaam</mat-option>
+            <mat-option value="arusha">Arusha</mat-option>
+            <mat-option value="dodoma">Dodoma</mat-option>
+            <mat-option value="morogoro">Morogoro</mat-option>
+            <mat-option value="tanga">Tanga</mat-option>
+            <mat-option value="kagera">Kagera</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Category:</mat-label>
+          <mat-select name="category" ngModel required>
+            <mat-option value="theft">Theft</mat-option>
+            <mat-option value="vandalism">Vandalism</mat-option>
+            <mat-option value="car-accident">Car Accident</mat-option>
+            <mat-option value="kishoka">Kishoka</mat-option>
+            <mat-option value="rescue">Rescue</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Statement</mat-label>
+          <textarea matInput ngModel required name="statement"></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</section>

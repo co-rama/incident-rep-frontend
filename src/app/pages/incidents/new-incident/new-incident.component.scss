@@ -1,0 +1,19 @@
+.new-incident-form {
+  margin-top: 5px;
+  // border: solid black 1px;
+  display: grid;
+  justify-content: center;
+}
+.new-incident-form form {
+  width: 800px;
+  // border: solid black 1px;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+mat-card-header {
+  display: grid;
+  justify-items: center;
+}
