@@ -12,4 +12,6 @@ import { AvailableIncidentsComponent } from "./available-incidents/available-inc
 })
 export class IncidentsComponent {
   create = signal(false);
+  // loadingState: boolean = false;
+
 }

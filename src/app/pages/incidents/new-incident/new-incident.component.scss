@@ -8,7 +8,9 @@
   width: 800px;
   // border: solid black 1px;
 }
-
+mat-card {
+  background-color: #fff;
+}
 mat-card-content {
   display: flex;
   flex-direction: column;

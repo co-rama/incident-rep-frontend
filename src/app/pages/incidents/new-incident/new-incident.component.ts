@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Incident } from '../../../shared/incident.model';
 import { IncidentsService } from '../../../services/incidents.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-incident',
@@ -15,14 +16,18 @@ import { IncidentsService } from '../../../services/incidents.service';
 export class NewIncidentComponent {
   items: Array<{
     title: string;
-    quantity: number;
-    cost: number;
+    quantity: string;
+    cost: string;
     specification: string;
-  }> = [{ title: '', quantity: 0, cost: 0, specification: '' }];
+  }> = [{ title: '', quantity: '', cost: '', specification: '' }];
   private incidentsService = inject(IncidentsService);
+  private toastrService = inject(ToastrService)
+  loadingState: boolean = false;
+  toastr: any;
+  destroyRef: any;
 
   addItem() {
-    this.items.push({ title: '', quantity: 0, cost: 0, specification: '' });
+    this.items.push({ title: '', quantity: '', cost: '', specification: '' });
   }
 
   removeItem(index: number) {
@@ -50,6 +55,23 @@ export class NewIncidentComponent {
       items: structuredItems,
     };
     // console.log(newIncident);
-    this.incidentsService.AddNewIncident(newIncident).subscribe();
+    this.loadingState = true;
+    const subscription = this.incidentsService
+      .AddNewIncident(newIncident)
+      .subscribe({
+        next: () => {
+          this.loadingState = false;
+          this.toastrService.success('Incident Saved Successfuly', 'Info');
+        },
+        error: (error) => {
+          this.loadingState = false;
+          const message = error.error.message;
+          this.toastrService.error(message, 'Error:');
+        },
+      });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
   }
 }

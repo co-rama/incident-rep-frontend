@@ -77,7 +77,7 @@
               />
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" floatLabel="always">
               <mat-label>Cost</mat-label>
               <input
                 matInput
@@ -86,6 +86,8 @@
                 name="cost-{{ i }}"
                 required
               />
+              <span matTextPrefix>Tshs&nbsp;</span>
+              <span matTextSuffix>.00</span>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -94,6 +96,7 @@
                 matInput
                 [(ngModel)]="item.specification"
                 name="specification-{{ i }}"
+                required
               />
             </mat-form-field>
 
@@ -105,11 +108,22 @@
       </mat-card-content>
     </mat-card>
     <mat-card id="buttons-card">
-      <button mat-raised-button color="primary" (click)="addItem()" id="add">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addItem()"
+        id="add"
+        type="button"
+      >
         Add Item
       </button>
+
       <button mat-raised-button color="primary" type="submit" id="submit">
-        Submit Incident
+        @if(loadingState){
+        <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+        }@else {
+        {{ loadingState ? "Saving..." : "Save Incident" }}
+        }
       </button>
     </mat-card>
   </form>
