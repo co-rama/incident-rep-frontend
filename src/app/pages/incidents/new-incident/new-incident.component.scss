@@ -5,7 +5,7 @@
   justify-content: center;
 }
 .new-incident-form form {
-  width: 800px;
+  width: 85%;
   // border: solid black 1px;
 }
 
@@ -17,3 +17,26 @@ mat-card-header {
   display: grid;
   justify-items: center;
 }
+#items-card {
+  margin-top: 10px;
+}
+#buttons-card {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 15px;
+}
+
+// #add {
+//   box-sizing: content-box;
+// }
+// #submit {
+//   box-sizing: content-box;
+// }

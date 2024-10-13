@@ -2,7 +2,7 @@
   <form #newIncident="ngForm" (ngSubmit)="submitNewIncident()">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>New Incident Report</mat-card-title>
+        <mat-card-title>NEW INCIDENT DETAILS</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <mat-form-field>
@@ -10,8 +10,13 @@
           <input matInput name="title" ngModel required />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Date & Time of Occurence:</mat-label>
-          <input matInput type="datetime" name="datetime" ngModel required />
+          <mat-label>Incident Date:</mat-label>
+          <input matInput type="datetime-local" name="date" ngModel required />
+          <!-- <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker> -->
         </mat-form-field>
         <mat-form-field>
           <mat-label>Location:</mat-label>
@@ -39,10 +44,73 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Statement</mat-label>
+          <mat-label>Statement: </mat-label>
           <textarea matInput ngModel required name="statement"></textarea>
         </mat-form-field>
       </mat-card-content>
+    </mat-card>
+    <mat-card id="items-card">
+      <mat-card-header>
+        <mat-card-title>ITEMS</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let item of items; index as i">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Title</mat-label>
+              <input
+                matInput
+                [(ngModel)]="item.title"
+                name="title-{{ i }}"
+                required
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Quantity</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="item.quantity"
+                name="quantity-{{ i }}"
+                required
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Cost</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="item.cost"
+                name="cost-{{ i }}"
+                required
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Specification</mat-label>
+              <input
+                matInput
+                [(ngModel)]="item.specification"
+                name="specification-{{ i }}"
+              />
+            </mat-form-field>
+
+            <button mat-icon-button color="warn" (click)="removeItem(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card id="buttons-card">
+      <button mat-raised-button color="primary" (click)="addItem()" id="add">
+        Add Item
+      </button>
+      <button mat-raised-button color="primary" type="submit" id="submit">
+        Submit Incident
+      </button>
     </mat-card>
   </form>
 </section>
