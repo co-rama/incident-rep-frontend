@@ -1,6 +1,6 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { MaterialImportModule } from '../../shared/material-import.module';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 export type MenuItem = {
   icon: string;
@@ -11,7 +11,7 @@ export type MenuItem = {
 @Component({
   selector: 'app-left-sidebar',
   standalone: true,
-  imports: [MaterialImportModule, RouterLink],
+  imports: [MaterialImportModule, RouterLink, RouterModule],
   template: `
     <!-- <div class="sidenav-header">
       <div class="header-text">
@@ -20,7 +20,13 @@ export type MenuItem = {
     </div> -->
     <mat-nav-list>
       @for(item of menuItems(); track item.label){
-      <a mat-list-item [routerLink]="item.route" routerLinkActive="active">
+      <a
+        mat-list-item
+        [routerLink]="item.route"
+        routerLinkActive="selected-menu-item"
+        #rla="routerLinkActive"
+        [activated]="rla.isActive"
+      >
         <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         @if(!sideNavCollapsed()){
         <span matListItemTitle>{{ item.label }}</span>
@@ -28,16 +34,55 @@ export type MenuItem = {
       </a>
       }
     </mat-nav-list>
+    <span class="spacer"></span>
+    <div class="logout-div">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="logout()"
+        class="logout-btn"
+      >
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </div>
   `,
   styles: [
     `
       mat-nav-list {
         margin-top: 35px;
       }
+      .selected-menu-item {
+        border-radius: 0px;
+        border-left: 5px solid;
+        border-left-color: blue;
+        border-top-left-radius: 0 !important; /* Ensure no top-left radius */
+        border-bottom-left-radius: 0 !important; /* Ensure no bottom-left radius */
+      }
+
+      .logout-btn {
+        margin-top: auto; /* Pushes the logout button to the bottom */
+        margin: 10px;
+
+        &:hover {
+          background-color: #d32f2f !important; /* Darker red on hover */
+          color: white;
+        }
+
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+      .logout-div {
+        margin-top: 40px;
+        // border: solid 1px black;
+        display: flex;
+        justify-content: flex-start;
+      }
     `,
   ],
 })
 export class LeftSidebarComponent {
+  private router = inject(Router);
   menuItems = signal<MenuItem[]>([
     {
       icon: 'dashboard',
@@ -63,5 +108,8 @@ export class LeftSidebarComponent {
   sideNavCollapsed = signal(false);
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val);
+  }
+  logout() {
+    this.router.navigate(['/login']);
   }
 }

@@ -23,7 +23,14 @@
           </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary" type="submit">login</button>
+          <button mat-raised-button color="primary" type="submit">
+            @if(loadingState){
+            <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+            }@else {
+            <mat-icon>login</mat-icon>
+            }
+            {{ loadingState ? "" : "Login" }}
+          </button>
         </mat-card-actions>
       </mat-card>
     </form>
