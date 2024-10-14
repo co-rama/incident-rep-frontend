@@ -11,6 +11,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @NgModule({
   exports: [
@@ -26,6 +30,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
   ],
 })
 export class MaterialImportModule {}
