@@ -2,7 +2,9 @@
   <form #newIncident="ngForm" (ngSubmit)="submitNewIncident(newIncident)">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>NEW INCIDENT DETAILS</mat-card-title>
+        <mat-card-title>
+          <h4>Incident Details</h4>
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <mat-form-field>
@@ -25,22 +27,19 @@
         <mat-form-field>
           <mat-label>Region:</mat-label>
           <mat-select name="region" ngModel required="true">
-            <mat-option value="daresalaam">Dar Es Salaam</mat-option>
-            <mat-option value="arusha">Arusha</mat-option>
-            <mat-option value="dodoma">Dodoma</mat-option>
-            <mat-option value="morogoro">Morogoro</mat-option>
-            <mat-option value="tanga">Tanga</mat-option>
-            <mat-option value="kagera">Kagera</mat-option>
+            <mat-option *ngFor="let region of regions" [value]="region.name">
+              {{ region.name }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Category:</mat-label>
           <mat-select name="category" ngModel required>
-            <mat-option value="theft">Theft</mat-option>
-            <mat-option value="vandalism">Vandalism</mat-option>
-            <mat-option value="car-accident">Car Accident</mat-option>
-            <mat-option value="kishoka">Kishoka</mat-option>
-            <mat-option value="rescue">Rescue</mat-option>
+            <mat-option value="Theft">Theft</mat-option>
+            <mat-option value="Vandalism">Vandalism</mat-option>
+            <mat-option value="Car Add">Car Accident</mat-option>
+            <mat-option value="Vishoka">Vishoka</mat-option>
+            <mat-option value="Rescue">Rescue</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
@@ -51,7 +50,9 @@
     </mat-card>
     <mat-card id="items-card">
       <mat-card-header>
-        <mat-card-title>ITEMS</mat-card-title>
+        <mat-card-title>
+          <h5>Affected Items</h5>
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div *ngFor="let item of items; index as i">

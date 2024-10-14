@@ -1,11 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MaterialImportModule } from '../../../shared/material-import.module';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Incident } from '../../../shared/incident.model';
 import { IncidentsService } from '../../../services/incidents.service';
 import { ToastrService } from 'ngx-toastr';
+import { RegionsService } from '../../../services/regions.service';
 
+interface Region {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-new-incident',
   standalone: true,
@@ -13,7 +18,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './new-incident.component.html',
   styleUrl: './new-incident.component.scss',
 })
-export class NewIncidentComponent {
+export class NewIncidentComponent implements OnInit {
   items: Array<{
     title: string;
     quantity: string;
@@ -21,10 +26,22 @@ export class NewIncidentComponent {
     specification: string;
   }> = [{ title: '', quantity: '', cost: '', specification: '' }];
   private incidentsService = inject(IncidentsService);
-  private toastrService = inject(ToastrService)
+  private toastrService = inject(ToastrService);
+  private regionsService = inject(RegionsService);
+  regions: Region[] = [];
+
   loadingState: boolean = false;
   toastr: any;
   destroyRef: any;
+
+  ngOnInit(): void {
+    this.regionsService.getRegions().subscribe({
+      next: (regions: Region[]) => {
+        this.regions = regions;
+      },
+      error: () => {},
+    });
+  }
 
   addItem() {
     this.items.push({ title: '', quantity: '', cost: '', specification: '' });
