@@ -1,9 +1,19 @@
-import { Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MaterialImportModule } from '../../../shared/material-import.module';
 import { IncidentsService } from '../../../services/incidents.service';
 import { ToastrService } from 'ngx-toastr';
 import { Incident } from '../../../shared/incident.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-available-incidents',
@@ -12,7 +22,7 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './available-incidents.component.html',
   styleUrl: './available-incidents.component.scss',
 })
-export class AvailableIncidentsComponent implements OnInit {
+export class AvailableIncidentsComponent implements OnInit, AfterViewInit {
   private incidentsService = inject(IncidentsService);
   private toastrService = inject(ToastrService);
   private destroyRef = inject(DestroyRef);
@@ -26,8 +36,12 @@ export class AvailableIncidentsComponent implements OnInit {
     'location',
     'region',
     'statement',
+    'action',
   ];
   dataSource = new MatTableDataSource<Incident>([]);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   constructor() {
     effect(() => {
       // Use the effect to reactively update the data source whenever incidents change
@@ -35,6 +49,8 @@ export class AvailableIncidentsComponent implements OnInit {
         this.fetchedIncidents()
       );
       // console.log(this.fetchedIncidents());
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
   ngOnInit(): void {
@@ -52,5 +68,8 @@ export class AvailableIncidentsComponent implements OnInit {
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
     });
+  }
+  ngAfterViewInit() {
+    // this.dataSource.paginator = this.paginator;
   }
 }
