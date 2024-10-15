@@ -1,5 +1,10 @@
 <section>
   <div class="mat-elevation-z8">
+    @if(loadingState){
+    <div class="mat-spinner">
+      <mat-spinner [diameter]="40" [strokeWidth]="4"></mat-spinner>
+    </div>
+    } @if(!loadingState){
     <table mat-table [dataSource]="dataSource" matSort>
       <!-- Position Column -->
       <ng-container matColumnDef="position">
@@ -58,11 +63,12 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       <!-- Use mat-row here -->
       <!-- <mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        matRipple
-        [matRippleColor]="'rgba(0, 0, 0, 0.1)'"
-      ></mat-row> -->
+          *matRowDef="let row; columns: displayedColumns"
+          matRipple
+          [matRippleColor]="'rgba(0, 0, 0, 0.1)'"
+        ></mat-row> -->
     </table>
+    }
 
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20]"

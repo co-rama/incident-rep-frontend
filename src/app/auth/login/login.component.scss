@@ -9,9 +9,12 @@
   background-color: black;
   display: flex;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
 
   padding: 20px;
+}
+.welcome-section h1 {
+  margin: 150px auto;
 }
 .login-section {
   flex: 1;

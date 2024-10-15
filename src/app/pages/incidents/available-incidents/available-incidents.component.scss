@@ -3,3 +3,12 @@
   justify-content: flex-start; /* Align buttons to the start (left) */
   gap: 8px; /* Optional: Add space between buttons */
 }
+.mat-spinner {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  // margin: 10px;
+  // height: 100%;
+  // width: 100%;
+  // border: solid 1px black;
+}
