@@ -1,11 +1,14 @@
 .new-incident-form {
   margin-top: 5px;
   // border: solid black 1px;
-  display: grid;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 .new-incident-form form {
-  width: 800px;
+  width: 100%;
+  max-width: 700px;
   // border: solid black 1px;
 }
 mat-card {

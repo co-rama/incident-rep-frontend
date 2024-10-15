@@ -1,8 +1,15 @@
 <h3>Incidents</h3>
-<button mat-raised-button color="primary" (click)="create.set(!create())">
-  <mat-icon>add</mat-icon>
-  <span>New Incident</span>
-</button>
+<div class="contorls">
+  <button
+    class="new-button"
+    mat-raised-button
+    color="primary"
+    (click)="create.set(!create())"
+  >
+    <mat-icon>add</mat-icon>
+    <span>New Incident</span>
+  </button>
+</div>
 @if(create()){
 <app-new-incident></app-new-incident>
 }@else {
