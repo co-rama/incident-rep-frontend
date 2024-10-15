@@ -1,0 +1,23 @@
+.dashboard-container {
+  padding: 5px;
+}
+
+.small-screen-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.responsive-card {
+  width: 100%;
+}
+
+// mat-grid-tile {
+//   display: flex;
+//   align-items: stretch;
+// }
+
+mat-card {
+  width: 98%;
+  height: 90%;
+}
