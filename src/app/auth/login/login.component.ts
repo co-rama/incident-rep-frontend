@@ -39,7 +39,7 @@ export class LoginComponent {
         error: (error) => {
           this.loadingState = false;
           const message = error.error.message;
-          this.toastr.error(message, 'Error:');
+          this.toastr.error(message, 'Error');
         },
       });
 

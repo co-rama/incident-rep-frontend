@@ -8,4 +8,12 @@ export interface Incident {
   items: Array<{}>;
   createdAt?: string;
   updatedAt?: string;
+  userEmail?: string;
+}
+export interface IncidentsCount {
+  allTime: number;
+  thisMonth: number;
+  thisWeek: number;
+  today: number;
+  message?: string;
 }
