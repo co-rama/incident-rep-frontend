@@ -39,37 +39,75 @@
   >
     <mat-grid-tile>
       <mat-card>
+        @if(loadingState){
+        <div class="mat-spinner">
+          <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+        </div>
+        }@else {
         <mat-card-header>
-          <mat-card-title>Quick Stats</mat-card-title>
+          <mat-card-title><h5>Today and Weekly Updates</h5></mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>Total Incidents: 32</p>
-          <p>Active Alerts: 5</p>
+          <p>
+            Today Incidents:
+            <button mat-raised-button>
+              {{ fetchedIncidentsCount()?.today }}
+            </button>
+          </p>
+          <p>
+            Total this Week:
+            <button mat-raised-button>
+              {{ fetchedIncidentsCount()?.thisWeek }}
+            </button>
+          </p>
         </mat-card-content>
+        }
       </mat-card>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <mat-card>
+        @if(loadingState){
+        <div class="mat-spinner">
+          <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+        </div>
+        }@else {
         <mat-card-header>
-          <mat-card-title>Recent Updates</mat-card-title>
+          <mat-card-title> <h5>Monthly Updates</h5></mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>Updated System Rules</p>
-          <p>Resolved Incidents: 12</p>
+          <p>
+            Total this Month:
+            <button mat-raised-button>
+              {{ fetchedIncidentsCount()?.thisMonth }}
+            </button>
+          </p>
+          <p>Resolved Incidents: 0</p>
         </mat-card-content>
+        }
       </mat-card>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <mat-card>
+        @if(loadingState){
+        <div class="mat-spinner">
+          <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+        </div>
+        }@else {
         <mat-card-header>
-          <mat-card-title>Alerts Summary</mat-card-title>
+          <mat-card-title><h5>Total Incidents Summary</h5></mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>Critical Alerts: 2</p>
-          <p>Warnings: 8</p>
+          <p>
+            AllTime Total:
+            <button mat-raised-button>
+              {{ fetchedIncidentsCount()?.allTime }}
+            </button>
+          </p>
+          <!-- <p>Warnings: 8</p> -->
         </mat-card-content>
+        }
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
@@ -93,11 +131,70 @@
     </mat-card>
 
     <mat-card class="responsive-card">
-      <mat-card-title>Quick Stats</mat-card-title>
+      @if(loadingState){
+      <div class="mat-spinner">
+        <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+      </div>
+      }@else {
+      <mat-card-header>
+        <mat-card-title><h5>Today and Weekly Updates</h5></mat-card-title>
+      </mat-card-header>
       <mat-card-content>
-        <p>Total Incidents: 32</p>
-        <p>Active Alerts: 5</p>
+        <p>
+          Today Incidents:
+          <button mat-raised-button>
+            {{ fetchedIncidentsCount()?.today }}
+          </button>
+        </p>
+        <p>
+          Total this Week:
+          <button mat-raised-button>
+            {{ fetchedIncidentsCount()?.thisWeek }}
+          </button>
+        </p>
       </mat-card-content>
+      }
+    </mat-card>
+
+    <mat-card>
+      @if(loadingState){
+      <div class="mat-spinner">
+        <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+      </div>
+      }@else {
+      <mat-card-header>
+        <mat-card-title> <h5>Monthly Updates</h5></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Total this Month:
+          <button mat-raised-button>
+            {{ fetchedIncidentsCount()?.thisMonth }}
+          </button>
+        </p>
+        <p>Resolved Incidents: 0</p>
+      </mat-card-content>
+      }
+    </mat-card>
+    <mat-card>
+      @if(loadingState){
+      <div class="mat-spinner">
+        <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+      </div>
+      }@else {
+      <mat-card-header>
+        <mat-card-title><h5>Total Incidents Summary</h5></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          AllTime Total:
+          <button mat-raised-button>
+            {{ fetchedIncidentsCount()?.allTime }}
+          </button>
+        </p>
+        <!-- <p>Warnings: 8</p> -->
+      </mat-card-content>
+      }
     </mat-card>
   </div>
 </div>

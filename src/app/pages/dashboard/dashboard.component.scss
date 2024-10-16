@@ -22,3 +22,19 @@ mat-card {
   height: 90%;
   background-color: #fff;
 }
+// .count {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   // justify-content: center;
+// }
+.mat-spinner {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  padding: 50px;
+  // margin: 10px;
+  // height: 100%;
+  // width: 100%;
+  // border: solid 1px black;
+}

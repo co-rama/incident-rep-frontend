@@ -1,6 +1,8 @@
 import {
   Component,
+  DestroyRef,
   HostListener,
+  inject,
   Inject,
   OnInit,
   PLATFORM_ID,
@@ -9,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialImportModule } from '../../shared/material-import.module';
 import { BaseChartDirective } from 'ng2-charts';
 import { isPlatformBrowser } from '@angular/common';
+import { IncidentsService } from '../../services/incidents.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,9 +23,14 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class DashboardComponent implements OnInit {
   isBrowser: boolean;
+  private incidentsService = inject(IncidentsService);
+  private toastrService = inject(ToastrService);
+  private destroyRef = inject(DestroyRef);
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
+  fetchedIncidentsCount = this.incidentsService.loadedIncidentsCount;
+  loadingState: boolean = false;
 
   isLargeScreen: boolean = true;
 
@@ -43,7 +52,7 @@ export class DashboardComponent implements OnInit {
     datasets: [
       {
         label: 'Incidents',
-        data: [5, 10, 8, 12, 15, 30,12,16,0,15],
+        data: [5, 10, 8, 12, 15, 30, 12, 16, 0, 15],
         backgroundColor: 'rgba(63, 81, 181, 0.5)',
         borderColor: 'rgba(63, 81, 181, 1)',
         borderWidth: 1,
@@ -66,5 +75,16 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.onResize();
+    this.loadingState = true;
+    const subscription = this.incidentsService.getIncidentsCounts().subscribe({
+      next: () => (this.loadingState = false),
+      error: (error) => {
+        this.loadingState = false;
+        const message = error.error.message;
+        this.toastrService.error(message, 'Error');
+      },
+    });
+
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 }
