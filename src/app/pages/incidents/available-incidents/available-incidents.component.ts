@@ -59,7 +59,8 @@ export class AvailableIncidentsComponent implements OnInit, AfterViewInit {
       // next: () => {},
       error: (error) => {
         this.loadingState = false;
-        this.toastrService.error(error.message, 'Error');
+        const message = error.error.message;
+        this.toastrService.error(message, 'Error');
       },
       complete: () => {
         this.loadingState = false;

@@ -43,9 +43,7 @@ export class IncidentsService {
       .pipe(
         map((response) => response.incidents),
         catchError((error) => {
-          return throwError(
-            () => new Error('Something went wrong, plase try again  ')
-          );
+          throw error;
         })
       );
   }
