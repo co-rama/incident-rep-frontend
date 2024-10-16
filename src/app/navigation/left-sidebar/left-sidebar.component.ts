@@ -1,6 +1,7 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { MaterialImportModule } from '../../shared/material-import.module';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 export type MenuItem = {
   icon: string;
@@ -86,6 +87,7 @@ export type MenuItem = {
 })
 export class LeftSidebarComponent {
   private router = inject(Router);
+  private authService = inject(AuthService);
   menuItems = signal<MenuItem[]>([
     {
       icon: 'dashboard',
@@ -113,6 +115,6 @@ export class LeftSidebarComponent {
     this.sideNavCollapsed.set(val);
   }
   logout() {
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 }

@@ -27,18 +27,26 @@ export class AuthService {
   constructor() {
     this.authUser.set(this.readLocalStorageUser());
   }
-  readLocalStorageUser() {
+  readLocalStorageUser(): any | null {
     if (typeof window !== 'undefined') {
-      const userData = localStorage.getItem(this.userStorageKey);
-      if (userData) {
-        return JSON.parse(userData);
-      }
+      const userData: any = localStorage.getItem(this.userStorageKey);
+      return userData ? JSON.parse(userData) : null;
     }
+    return null;
   }
   setLocalStorageUser(user: AuthResponse) {
     if (typeof window !== 'undefined') {
       localStorage.setItem(this.userStorageKey, JSON.stringify(user));
     }
+  }
+  getOptions(): object {
+    const user = this.readLocalStorageUser();
+    const token = user?.token || ''; // Use optional chaining to safely access the token
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
   }
   login(authData: Auth) {
     return this.httpService
@@ -68,5 +76,18 @@ export class AuthService {
           },
         })
       );
+  }
+  logout() {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem(this.userStorageKey))
+        localStorage.removeItem(this.userStorageKey);
+      this.authUser.set({
+        token: '',
+        email: '',
+        expiresIn: 0,
+        username: '',
+      });
+      this.router.navigate(['/login']);
+    }
   }
 }
