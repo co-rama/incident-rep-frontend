@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Incident } from '../shared/incident.model';
+import { Incident, IncidentsCount } from '../shared/incident.model';
 import { environment } from '../../environments/environment';
-import { catchError, map, tap, throwError } from 'rxjs';
+import { catchError, map, of, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { response } from 'express';
+import { ToastrService } from 'ngx-toastr';
 
 export interface IncidentResponse {
   incidents: Incident[];
@@ -16,8 +18,10 @@ export interface IncidentResponse {
 export class IncidentsService {
   private httpService = inject(HttpClient);
   private router = inject(Router);
+  private toastrService = inject(ToastrService);
   url = `${environment.backendUrl}/incidents`;
   private incidents = signal<Incident[]>([]);
+  private incidentsCount = signal<IncidentsCount | null>(null);
 
   // loadedIncidents = this.incidents.asReadonly();
   constructor() {}
@@ -49,5 +53,21 @@ export class IncidentsService {
   }
   get loadedIncidents() {
     return this.incidents.asReadonly();
+  }
+
+  get loadedIncidentsCount() {
+    return this.incidentsCount.asReadonly();
+  }
+
+  getIncidentsCounts() {
+    return this.httpService.get<IncidentsCount>(this.url + '/count').pipe(
+      tap((response) => {
+        this.incidentsCount.set(response);
+      }),
+      catchError((error) => {
+        throw error;
+        // return of(null); // Return an observable with null on error
+      })
+    );
   }
 }
