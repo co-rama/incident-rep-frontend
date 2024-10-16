@@ -17,3 +17,10 @@ export interface IncidentsCount {
   today: number;
   message?: string;
 }
+export interface Filters {
+  title?: string;
+  category?: string;
+  region?: string;
+  from?: string;
+  to?: string;
+}
