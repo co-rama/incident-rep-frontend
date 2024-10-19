@@ -29,12 +29,12 @@ export class AuthService {
   constructor() {
     this.authUser.set(this.readLocalStorageUser());
   }
-  readLocalStorageUser(): any | null {
+  readLocalStorageUser(): any {
     if (typeof window !== 'undefined') {
       const userData: any = localStorage.getItem(this.userStorageKey);
-      return userData ? JSON.parse(userData) : null;
+      return userData ? JSON.parse(userData) : '';
     }
-    return null;
+    return '';
   }
   setLocalStorageUser(user: AuthResponse) {
     if (typeof window !== 'undefined') {
