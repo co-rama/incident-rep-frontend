@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
-  fetchedIncidentsCount = this.incidentsService.loadedIncidentsCount;
+  fetchedIncidentsCount$ = this.incidentsService.loadedIncidentsCount;
   loadingState: boolean = false;
 
   isLargeScreen: boolean = true;
@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit {
     this.onResize();
     this.loadingState = true;
     const subscription = this.incidentsService.getIncidentsCounts().subscribe({
-      next: () => (this.loadingState = false),
+      next: () => {},
       error: (error) => {
         this.loadingState = false;
         const message = error.error.message;
