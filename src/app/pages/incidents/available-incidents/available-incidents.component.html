@@ -21,7 +21,7 @@
       <!-- Weight Column -->
       <ng-container matColumnDef="datetime">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Date&Time</th>
-        <td mat-cell *matCellDef="let element">{{ element.datetime }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.datetime | date: 'short'}}</td>
       </ng-container>
 
       <!-- Symbol Column -->

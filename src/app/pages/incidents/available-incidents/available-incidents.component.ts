@@ -7,6 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { MaterialImportModule } from '../../../shared/material-import.module';
 import { IncidentsService } from '../../../services/incidents.service';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +19,7 @@ import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-available-incidents',
   standalone: true,
-  imports: [MaterialImportModule],
+  imports: [MaterialImportModule, DatePipe],
   templateUrl: './available-incidents.component.html',
   styleUrl: './available-incidents.component.scss',
 })
