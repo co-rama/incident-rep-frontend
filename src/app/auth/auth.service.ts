@@ -23,7 +23,9 @@ export class AuthService {
     username: '',
   });
 
+  // private authUser = signal<any | null>(this.readLocalStorageUser());
   loggedUser = this.authUser.asReadonly();
+
   constructor() {
     this.authUser.set(this.readLocalStorageUser());
   }
@@ -41,6 +43,7 @@ export class AuthService {
   }
   getOptions(): object {
     const user = this.readLocalStorageUser();
+
     const token = user?.token || ''; // Use optional chaining to safely access the token
     return {
       headers: {

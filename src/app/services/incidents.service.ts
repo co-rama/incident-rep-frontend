@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { response } from 'express';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../auth/auth.service';
+import { AuthResponse } from '../auth/login/auth.model';
 
 export interface IncidentResponse {
   incidents: Incident[];
@@ -24,9 +25,12 @@ export class IncidentsService {
   private incidents = signal<Incident[]>([]);
   private incidentsCount = signal<IncidentsCount | null>(null);
   private retrievedIncidents = signal<Incident[]>([]);
+  private options = signal<any | null>(null);
 
   // loadedIncidents = this.incidents.asReadonly();
-  constructor() {}
+  constructor() {
+    this.options.set(this.authService.getOptions());
+  }
   AddNewIncident(newIncident: Incident) {
     return this.httpService.put<Incident>(
       this.url + '/new',

@@ -81,7 +81,11 @@ export class DashboardComponent implements OnInit {
       error: (error) => {
         this.loadingState = false;
         const message = error.error.message;
+        console.log(error);
         this.toastrService.error(message, 'Error');
+      },
+      complete: () => {
+        this.loadingState = false;
       },
     });
 

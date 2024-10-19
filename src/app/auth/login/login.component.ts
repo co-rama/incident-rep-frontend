@@ -20,7 +20,7 @@ export class LoginComponent {
   private router = inject(Router);
   loadingState: boolean = false;
 
-  onSubmit(form: NgForm) {
+  login(form: NgForm) {
     if (form.invalid) {
       return;
     }
@@ -39,6 +39,7 @@ export class LoginComponent {
         error: (error) => {
           this.loadingState = false;
           const message = error.error.message;
+          console.log(message);
           this.toastr.error(message, 'Error');
         },
       });
