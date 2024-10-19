@@ -1,0 +1,36 @@
+.incident-toolbar {
+  display: flex;
+  // justify-content: space-between; // Space between left and right sections
+  padding: 2px 4px; // Padding for better spacing
+  min-height: 85px; // Ensure the toolbar has a standard height
+  background-color: #fff;
+  margin-bottom: 5px;
+
+  .toolbar-buttons {
+    // border: solid 1px black;
+    display: flex;
+    align-items: center; // Center items vertically
+    // justify-content: space-between;
+    button {
+      // height: 40px; // Uniform height for buttons
+      margin-right: 8px; // Space between buttons
+      border-radius: 0; // Remove rounded corners
+    }
+  }
+  .toolbar-filters {
+    // border: solid 1px black;
+    display: flex;
+    align-items: center; // Center items vertically
+
+    .filter-field {
+      max-width: 175px; // Minimum width for form fields
+      margin-right: 4px; // Space to the right
+    }
+
+    button {
+      // height: 40px; // Uniform height for the apply filters button
+      border-radius: 0; // Remove rounded corners
+      margin: auto;
+    }
+  }
+}
