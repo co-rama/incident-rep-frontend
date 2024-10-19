@@ -57,10 +57,13 @@ export class AvailableIncidentsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.loadingState = true;
     const subscription = this.incidentsService.loadUserIncidents().subscribe({
-      // next: () => {},
+      next: () => {
+        this.loadingState = false;
+      },
       error: (error) => {
         this.loadingState = false;
         const message = error.error.message;
+        console.error(error);
         this.toastrService.error(message, 'Error');
       },
       complete: () => {

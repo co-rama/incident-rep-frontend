@@ -25,12 +25,9 @@ export class IncidentsService {
   private incidents = signal<Incident[]>([]);
   private incidentsCount = signal<IncidentsCount | null>(null);
   private retrievedIncidents = signal<Incident[]>([]);
-  private options = signal<any | null>(null);
 
   // loadedIncidents = this.incidents.asReadonly();
-  constructor() {
-    this.options.set(this.authService.getOptions());
-  }
+  constructor() {}
   AddNewIncident(newIncident: Incident) {
     return this.httpService.put<Incident>(
       this.url + '/new',

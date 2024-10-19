@@ -1,5 +1,5 @@
 <h3>Incidents</h3>
-<div class="contorls">
+<!-- <div class="contorls">
   <button
     class="new-button"
     mat-raised-button
@@ -9,9 +9,12 @@
     <mat-icon>add</mat-icon>
     <span>New Incident</span>
   </button>
-</div>
+</div> -->
+<app-actions (showCreationForm)="handleConnectionChange($event)"></app-actions>
 @if(create()){
-<app-new-incident></app-new-incident>
+<app-new-incident
+  (connectionChange)="handleConnectionChange($event)"
+></app-new-incident>
 }@else {
 <app-available-incidents></app-available-incidents>
 }

@@ -1,4 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MaterialImportModule } from '../../../shared/material-import.module';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,6 +13,7 @@ import { Incident } from '../../../shared/incident.model';
 import { IncidentsService } from '../../../services/incidents.service';
 import { ToastrService } from 'ngx-toastr';
 import { RegionsService } from '../../../services/regions.service';
+import { Router } from '@angular/router';
 
 interface Region {
   id: number;
@@ -29,10 +37,12 @@ export class NewIncidentComponent implements OnInit {
   private toastrService = inject(ToastrService);
   private regionsService = inject(RegionsService);
   regions: Region[] = [];
+  private router = inject(Router);
 
   loadingState: boolean = false;
   toastr: any;
   destroyRef: any;
+  @Output() connectionChange = new EventEmitter<boolean>();
 
   ngOnInit(): void {
     this.regionsService.getRegions().subscribe({
@@ -79,6 +89,7 @@ export class NewIncidentComponent implements OnInit {
         next: () => {
           this.loadingState = false;
           this.toastrService.success('Incident Saved Successfuly', 'Info');
+          this.connectionChange.emit(false);
         },
         error: (error) => {
           this.loadingState = false;
@@ -91,4 +102,5 @@ export class NewIncidentComponent implements OnInit {
       subscription.unsubscribe();
     });
   }
+  cancel() {}
 }
