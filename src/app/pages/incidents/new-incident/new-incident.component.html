@@ -13,12 +13,19 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Incident Date:</mat-label>
-          <input matInput type="datetime-local" name="date" ngModel required />
-          <!-- <mat-datepicker-toggle
+          <input
+            matInput
+            name="date"
+            ngModel
+            required
+            placeholder="Choose a date"
+            [matDatepicker]="picker"
+          />
+          <mat-datepicker-toggle
             matSuffix
             [for]="picker"
           ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker> -->
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Location:</mat-label>
