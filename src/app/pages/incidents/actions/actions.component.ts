@@ -35,6 +35,7 @@ export class ActionsComponent implements OnInit {
   toDate: Date | undefined = undefined;
   create = signal(true);
   @Output() showCreationForm = new EventEmitter<boolean>();
+  @Output() showResultsFiltered = new EventEmitter<boolean>();
   private regionsService = inject(RegionsService);
   private incidentsService = inject(IncidentsService);
   private toastrService = inject(ToastrService);
@@ -84,7 +85,8 @@ export class ActionsComponent implements OnInit {
 
   applyFilters() {
     // Logic to apply filters based on selectedCategories and selectedRegions and date
-    console.log(this.filtereredIncidents());
+    // console.log(this.filtereredIncidents());
+    this.showResultsFiltered.emit(true);
     this.loadingState = true;
     const subscription = this.incidentsService
       .getFilteredIncidents({

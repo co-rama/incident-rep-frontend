@@ -111,6 +111,7 @@ export class IncidentsService {
           this.retrievedIncidents.set(response.incidents);
         }),
         catchError((error) => {
+          this.retrievedIncidents.set([]);
           console.error('Error fetching incidents:', error);
           throw error;
         })

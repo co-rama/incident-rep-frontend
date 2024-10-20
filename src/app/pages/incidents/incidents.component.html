@@ -10,11 +10,16 @@
     <span>New Incident</span>
   </button>
 </div> -->
-<app-actions (showCreationForm)="handleConnectionChange($event)"></app-actions>
+<app-actions
+  (showCreationForm)="handleConnectionChange($event)"
+  (showResultsFiltered)="onShowResultsFiltered($event)"
+></app-actions>
 @if(create()){
 <app-new-incident
   (connectionChange)="handleConnectionChange($event)"
 ></app-new-incident>
+}@else if(showFilteredResults){
+<app-searched-incidents></app-searched-incidents>
 }@else {
 <app-available-incidents></app-available-incidents>
 }
