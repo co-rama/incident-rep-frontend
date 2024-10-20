@@ -2,6 +2,29 @@
   <button mat-icon-button (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
   </button>
+
+  <!-- Spacer to push the user section to the right -->
+  <span class="spacer"></span>
+
+  <!-- User Section -->
+  <div class="user-section">
+    <button mat-icon-button color="primary" [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <span class="username mat-primary-text">Hello, {{ authUser.username }}</span>
+
+    <!-- Dropdown Menu -->
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        Profile
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </mat-menu>
+  </div>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav opened mode="side" [style.width]="sideNavWidth()">

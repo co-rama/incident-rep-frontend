@@ -15,7 +15,7 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatGridListModule } from '@angular/material/grid-list';
-
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   exports: [
@@ -35,6 +35,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatSortModule,
     MatTableModule,
     MatGridListModule,
+    MatMenuModule,
   ],
 })
 export class MaterialImportModule {}
