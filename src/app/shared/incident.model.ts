@@ -19,8 +19,8 @@ export interface IncidentsCount {
 }
 export interface Filters {
   title?: string;
-  category?: string;
-  region?: string;
-  from?: string;
-  to?: string;
+  categories?: string[];
+  regions?: string[];
+  from?: Date | undefined;
+  to?: Date | undefined;
 }

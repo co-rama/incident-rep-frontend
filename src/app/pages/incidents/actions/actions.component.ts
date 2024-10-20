@@ -1,7 +1,24 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+  signal,
+} from '@angular/core';
 import { MaterialImportModule } from '../../../shared/material-import.module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RegionsService } from '../../../services/regions.service';
+import { IncidentsService } from '../../../services/incidents.service';
+import { ToastrService } from 'ngx-toastr';
+
+interface Region {
+  id: number;
+  name: string;
+}
 
 @Component({
   selector: 'app-actions',
@@ -10,32 +27,45 @@ import { CommonModule } from '@angular/common';
   templateUrl: './actions.component.html',
   styleUrl: './actions.component.scss',
 })
-export class ActionsComponent {
+export class ActionsComponent implements OnInit {
   searchQuery: string = '';
-  selectedFilters: string[] = [];
+  selectedCategories: string[] = [];
   selectedRegions: string[] = [];
-  fromDate: Date | null = null;
-  toDate: Date | null = null;
+  fromDate: Date | undefined = undefined;
+  toDate: Date | undefined = undefined;
   create = signal(true);
   @Output() showCreationForm = new EventEmitter<boolean>();
-  incidents = [
-    { title: 'Vandalism in Arusha', category: 'Vandalism', region: 'Arusha' },
-    { title: 'Theft in Iringa', category: 'Theft', region: 'Iringa' },
-    { title: 'Kishoka Incident', category: 'Kishoka', region: 'Dar es Salaam' },
-    // Add more incidents here as needed
+  private regionsService = inject(RegionsService);
+  private incidentsService = inject(IncidentsService);
+  private toastrService = inject(ToastrService);
+  private destroyRef = inject(DestroyRef);
+  filtereredIncidents = this.incidentsService.loadRetrievedIncidents;
+  categoryFilters = [
+    { title: 'Vandalism' },
+    { title: 'Vishoka' },
+    { title: 'Theft' },
+    { title: 'Rescue' },
+    { title: 'Car Accident' },
   ];
 
-  filters = [{ title: 'Vandalism' }, { title: 'Kishoka' }, { title: 'Theft' }];
-
-  regions = [
-    { title: 'Arusha' },
-    { title: 'Iring' },
-    { title: 'Dar es Salaam' },
-    // Add more regions here as needed
-  ];
+  regions: any = [];
+  loadingState = false;
+  ngOnInit(): void {
+    this.regionsService.getRegions().subscribe({
+      next: (regions: Region[]) => {
+        regions.forEach((region) => {
+          const exists = regions.some((r: any) => r.title === region);
+          if (!exists) {
+            this.regions.push({ title: region.name });
+            // console.log(region);
+          }
+        });
+      },
+      error: () => {},
+    });
+  }
 
   add() {
-    // Logic to open a dialog for adding a new incident
     this.showCreationForm.emit(true);
     this.create.set(false);
   }
@@ -45,56 +75,45 @@ export class ActionsComponent {
   }
 
   exportToExcel() {
-    // Logic to export incidents to Excel
     console.log('Exporting incidents');
   }
 
   searchByQuery() {
-    // Logic to search incidents based on searchQuery
     console.log('Searching for incidents:', this.searchQuery);
   }
 
   applyFilters() {
-    // Logic to apply filters based on selectedFilters and selectedRegions
+    // Logic to apply filters based on selectedCategories and selectedRegions and date
     console.log(
       'Applying filters:',
-      this.selectedFilters,
-      this.selectedRegions
+      this.selectedCategories,
+      this.selectedRegions,
+      this.toDate,
+      this.fromDate
     );
-  }
+    this.loadingState = true;
+    const subscription = this.incidentsService
+      .getFilteredIncidents({
+        categories: this.selectedCategories,
+        regions: this.selectedRegions,
+        from: this.fromDate ? this.fromDate : undefined,
+        to: this.toDate ? this.toDate : undefined,
+      })
+      .subscribe({
+        next: (response) => {
+          this.loadingState = false;
+          this.toastrService.success(response.message, 'Info');
+          // console.log(response);
+        },
+        error: (error) => {
+          this.loadingState = false;
+          const message = error.error.message;
+          this.toastrService.error(message);
+        },
+      });
 
-  filterIncidents(incidents: any) {
-    return incidents.filter(
-      (incident: {
-        title: string;
-        category: string;
-        region: string;
-        date: Date;
-      }) => {
-        const matchesSearch = this.searchQuery
-          ? incident.title
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase())
-          : true;
-        const matchesCategory = this.selectedFilters.length
-          ? this.selectedFilters.includes(incident.category)
-          : true;
-        const matchesRegion = this.selectedRegions.length
-          ? this.selectedRegions.includes(incident.region)
-          : true;
-        const matchesDateRange = this.dateInRange(incident.date); // Assuming incident.date is a Date object
-
-        return (
-          matchesSearch && matchesCategory && matchesRegion && matchesDateRange
-        );
-      }
-    );
-  }
-
-  dateInRange(date: Date) {
-    if (this.fromDate && this.toDate) {
-      return date >= this.fromDate && date <= this.toDate;
-    }
-    return true; // If no date filter is applied, include the date
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
   }
 }

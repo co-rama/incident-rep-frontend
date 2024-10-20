@@ -84,7 +84,40 @@ export class IncidentsService {
         })
       );
   }
-  getIncidentsByDate(from: string, to: string) {
+  getFilteredIncidents(params: Filters) {
+    let httpParams = new HttpParams();
+
+    // Add categories as a comma-separated string if provided
+    if (params.categories?.length) {
+      httpParams = httpParams.set('category', params.categories.join(','));
+    }
+    // Add regions as a comma-separated string if provided
+    if (params.regions?.length) {
+      httpParams = httpParams.set('region', params.regions.join(','));
+    }
+    // Add dates if provided
+    if (params.from)
+      httpParams = httpParams.set('from', params.from.toISOString());
+    if (params.to) httpParams = httpParams.set('to', params.to.toISOString());
+
+    // Send the request with dynamic query parameters
+    return this.httpService
+      .get<IncidentResponse>(`${this.url}/filters`, {
+        params: httpParams,
+        ...this.authService.getOptions(),
+      })
+      .pipe(
+        tap((response) => {
+          this.retrievedIncidents.set(response.incidents);
+        }),
+        catchError((error) => {
+          console.error('Error fetching incidents:', error);
+          throw error;
+        })
+      );
+  }
+
+  getIncidentsByDateUnused(from: string, to: string) {
     return this.httpService
       .get<IncidentResponse>(
         `${this.url}/date/from/${from}/to/${to}`,
@@ -115,38 +148,6 @@ export class IncidentsService {
           // return of(null); // Return an observable with null on error
         })
       );
-  }
-  getFilteredIncidents(filters: Filters) {
-    let params = new HttpParams();
-    params = this.setQueryParams(filters);
-
-    return this.httpService
-      .get<IncidentResponse>(
-        `${this.url}/${params}`,
-        this.authService.getOptions()
-      )
-      .pipe(
-        tap((response) => {
-          this.retrievedIncidents.set(response.incidents);
-        }),
-        catchError((error) => {
-          throw error;
-          // return of(null); // Return an observable with null on error
-        })
-      );
-  }
-  setQueryParams(filters: Filters) {
-    let params = new HttpParams();
-
-    // Iterate over the keys with type assertion to avoid TypeScript error
-    (Object.keys(filters) as (keyof Filters)[]).forEach((key) => {
-      const value = filters[key];
-      if (value) {
-        params = params.set(key, value);
-      }
-    });
-
-    return params;
   }
   deleteIncident(id: string) {
     return this.httpService

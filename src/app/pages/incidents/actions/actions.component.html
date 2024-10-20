@@ -42,10 +42,12 @@
 
     <mat-form-field appearance="outline" class="filter-field">
       <mat-label>Filter by Category</mat-label>
-      <mat-select [(ngModel)]="selectedFilters" multiple>
-        <mat-option *ngFor="let filter of filters" [value]="filter.title">{{
-          filter.title
-        }}</mat-option>
+      <mat-select [(ngModel)]="selectedCategories" multiple>
+        <mat-option
+          *ngFor="let category of categoryFilters"
+          [value]="category.title"
+          >{{ category.title }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
 
@@ -57,7 +59,12 @@
         }}</mat-option>
       </mat-select>
     </mat-form-field>
-
+    @if(loadingState){
+    <div class="mat-spinner">
+      <mat-spinner [diameter]="16" [strokeWidth]="2"></mat-spinner>
+    </div>
+    }@if(!loadingState){
     <button mat-raised-button (click)="applyFilters()">Apply Filters</button>
+    }
   </div>
 </mat-toolbar>
