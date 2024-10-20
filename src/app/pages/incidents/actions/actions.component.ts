@@ -84,13 +84,7 @@ export class ActionsComponent implements OnInit {
 
   applyFilters() {
     // Logic to apply filters based on selectedCategories and selectedRegions and date
-    console.log(
-      'Applying filters:',
-      this.selectedCategories,
-      this.selectedRegions,
-      this.toDate,
-      this.fromDate
-    );
+    console.log(this.filtereredIncidents());
     this.loadingState = true;
     const subscription = this.incidentsService
       .getFilteredIncidents({
