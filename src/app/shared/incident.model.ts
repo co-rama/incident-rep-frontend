@@ -5,7 +5,12 @@ export interface Incident {
   region: string;
   category: string;
   statement: string;
-  items: Array<{}>;
+  items: Array<{
+    title: string; // Ensure title exists here if you're accessing it
+    quantity: number;
+    cost: number;
+    specification: string;
+  }>;
   createdAt?: string;
   updatedAt?: string;
   userEmail?: string;

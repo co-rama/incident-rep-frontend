@@ -19,7 +19,13 @@
   (connectionChange)="handleConnectionChange($event)"
 ></app-new-incident>
 }@else if(showFilteredResults){
-<app-searched-incidents></app-searched-incidents>
+<app-searched-incidents
+  (showDetailedItem)="onShowIncidentDetails($event)"
+></app-searched-incidents>
+}@else if(showIncidentDetails){
+<app-incident-details
+  (closeDetails)="onCloseIncidentDetails($event)"
+></app-incident-details>
 }@else {
 <app-available-incidents></app-available-incidents>
 }

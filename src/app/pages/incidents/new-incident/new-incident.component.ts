@@ -65,7 +65,7 @@ export class NewIncidentComponent implements OnInit {
     if (newIncidentForm.invalid) {
       return;
     }
-    const structuredItems = this.items.map((item) => ({
+    const structuredItems: any = this.items.map((item) => ({
       title: item.title,
       quantity: item.quantity,
       cost: item.cost,

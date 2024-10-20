@@ -1,4 +1,13 @@
-import { Component, DestroyRef, effect, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  effect,
+  EventEmitter,
+  inject,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IncidentsService } from '../../../services/incidents.service';
 import { MaterialImportModule } from '../../../shared/material-import.module';
 import { CommonModule } from '@angular/common';
@@ -20,9 +29,10 @@ export class SearchedIncidentsComponent implements OnInit {
   private toastrService = inject(ToastrService);
   private destroyRef = inject(DestroyRef);
   loadingState: boolean = false;
-  filtereredIncidents = this.incidentsService.loadRetrievedIncidents;
-   // Material Table Implementation
-   displayedColumns: string[] = [
+  filteredIncidents = this.incidentsService.loadRetrievedIncidents;
+  @Output() showDetailedItem = new EventEmitter<boolean>();
+  // Material Table Implementation
+  displayedColumns: string[] = [
     'title',
     'datetime',
     'category',
@@ -39,7 +49,7 @@ export class SearchedIncidentsComponent implements OnInit {
     effect(() => {
       // Use the effect to reactively update the data source whenever incidents change
       this.dataSource = new MatTableDataSource<Incident>(
-        this.filtereredIncidents()
+        this.filteredIncidents()
       );
       // console.log(this.fetchedIncidents());
       this.dataSource.paginator = this.paginator;
@@ -48,6 +58,8 @@ export class SearchedIncidentsComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  onRowClick(clickedIncident: Incident) {
+    this.incidentsService.setClickedIncident(clickedIncident);
+    this.showDetailedItem.emit(true);
+  }
 }
-
-

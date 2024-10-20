@@ -25,6 +25,15 @@ export class IncidentsService {
   private incidents = signal<Incident[]>([]);
   private incidentsCount = signal<IncidentsCount | null>(null);
   private retrievedIncidents = signal<Incident[]>([]);
+  private clickedRowIncident = signal<Incident>({
+    title: '',
+    datetime: '',
+    location: '',
+    region: '',
+    category: '',
+    statement: '',
+    items: [],
+  });
 
   // loadedIncidents = this.incidents.asReadonly();
   constructor() {}
@@ -70,7 +79,12 @@ export class IncidentsService {
   get loadRetrievedIncidents() {
     return this.retrievedIncidents.asReadonly();
   }
-
+  setClickedIncident(incident: Incident) {
+    this.clickedRowIncident.set(incident);
+  }
+  get getClickedIncident() {
+    return this.clickedRowIncident.asReadonly();
+  }
   getIncidentsCounts() {
     return this.httpService
       .get<IncidentsCount>(this.url + '/count', this.authService.getOptions())

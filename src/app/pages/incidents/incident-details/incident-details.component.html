@@ -1,0 +1,41 @@
+@if (incident()) {
+
+<ng-container>
+  <mat-card class="incident-card">
+    <mat-card-header>
+      <mat-card-title
+        ><h5>{{ incident().title }}</h5></mat-card-title
+      >
+      <mat-card-subtitle>
+        Date & Time: {{ incident().datetime | date : "short" }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p><strong>Location:</strong> {{ incident().location }}</p>
+      <p><strong>Region:</strong> {{ incident().region }}</p>
+      <p><strong>Category:</strong> {{ incident().category }}</p>
+      <p><strong>Statement:</strong> {{ incident().statement }}</p>
+
+      <mat-divider></mat-divider>
+
+      <h3 class="items-title">Items:</h3>
+      <ul class="items-list">
+        @for (item of incident().items; track item.title){
+        <li>
+          <strong>{{ item.title }}</strong> - Quantity: {{ item.quantity }},
+          Cost: {{ item.cost | currency : " TSHS" }}, Specification:
+          {{ item.specification }}
+        </li>
+        }
+      </ul>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>
+}
