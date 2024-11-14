@@ -109,6 +109,11 @@ export class LeftSidebarComponent {
       label: 'Reports',
       route: 'reports',
     },
+    {
+      icon: 'crisis_alert',
+      label: 'WhistleBlow',
+      route: 'whistleblow',
+    },
   ]);
   sideNavCollapsed = signal(false);
   @Input() set collapsed(val: boolean) {

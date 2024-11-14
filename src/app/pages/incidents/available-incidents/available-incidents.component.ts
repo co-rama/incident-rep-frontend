@@ -3,8 +3,10 @@ import {
   Component,
   DestroyRef,
   effect,
+  EventEmitter,
   inject,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
@@ -15,11 +17,12 @@ import { Incident } from '../../../shared/incident.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { TruncateTextPipe } from '../../../shared/truncate-text.pipe';
 
 @Component({
   selector: 'app-available-incidents',
   standalone: true,
-  imports: [MaterialImportModule, DatePipe],
+  imports: [MaterialImportModule, DatePipe, TruncateTextPipe],
   templateUrl: './available-incidents.component.html',
   styleUrl: './available-incidents.component.scss',
 })
@@ -42,6 +45,7 @@ export class AvailableIncidentsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Incident>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @Output() showDetailedItem = new EventEmitter<boolean>();
 
   constructor() {
     effect(() => {
@@ -76,5 +80,9 @@ export class AvailableIncidentsComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
+  }
+  onRowClick(clickedIncident: Incident) {
+    this.incidentsService.setClickedIncident(clickedIncident);
+    this.showDetailedItem.emit(true);
   }
 }

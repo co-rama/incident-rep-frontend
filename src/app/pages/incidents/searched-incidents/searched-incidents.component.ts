@@ -16,11 +16,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Incident } from '../../../shared/incident.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { TruncateTextPipe } from "../../../shared/truncate-text.pipe";
 
 @Component({
   selector: 'app-searched-incidents',
   standalone: true,
-  imports: [MaterialImportModule, CommonModule],
+  imports: [MaterialImportModule, CommonModule, TruncateTextPipe],
   templateUrl: './searched-incidents.component.html',
   styleUrl: './searched-incidents.component.scss',
 })

@@ -5,6 +5,7 @@ import { MainContainerComponent } from './navigation/main/main-container.compone
 import { IncidentsComponent } from './pages/incidents/incidents.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { ReportsComponent } from './pages/reports/reports.component';
+import { WhistleblowComponent } from './pages/whistleblow/whistleblow.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
       {
         path: 'reports',
         component: ReportsComponent,
+      },
+      {
+        path: 'whistleblow',
+        component: WhistleblowComponent,
       },
     ],
   },

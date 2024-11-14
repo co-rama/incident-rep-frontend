@@ -12,3 +12,10 @@
   // width: 100%;
   // border: solid 1px black;
 }
+
+td {
+  // max-width: 200px; /* Set a max width to constrain the column width */
+  overflow: hidden; /* Hide anything overflowing */
+  text-overflow: ellipsis; /* Add ellipsis when text overflows */
+  white-space: normal; /* Allows the text to wrap within the cell */
+}

@@ -27,5 +27,7 @@
   (closeDetails)="onCloseIncidentDetails($event)"
 ></app-incident-details>
 }@else {
-<app-available-incidents></app-available-incidents>
+<app-available-incidents
+  (showDetailedItem)="onShowIncidentDetails($event)"
+></app-available-incidents>
 }

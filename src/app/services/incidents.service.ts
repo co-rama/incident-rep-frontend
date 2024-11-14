@@ -57,7 +57,6 @@ export class IncidentsService {
         })
       );
   }
-
   loadUserIncidents() {
     return this.getIncidents().pipe(
       tap({
