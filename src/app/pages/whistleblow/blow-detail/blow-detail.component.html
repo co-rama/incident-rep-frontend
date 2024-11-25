@@ -23,8 +23,30 @@
       <h6><strong>Taarifa:</strong> {{ blow().taarifa }}</h6>
       <h6><strong>Taarifa ya Ziada:</strong> {{ blow().taarifa_ziada }}</h6>
       <h6><strong>Wahusika:</strong> {{ blow().wahusika }}</h6>
-      <h6><strong>Kiambatanisho:</strong>{{ blow().attachement }}</h6>
+      <h6><strong>Kiambatanisho:</strong></h6>
+      @if(blow().attachment){
+      <div>
+        <!-- Display Image (PNG, JPG) -->
+        <img
+          *ngIf="fileType === 'png' || fileType === 'jpg'"
+          [src]="backendUrl"
+          alt="Attachment"
+          height="700px"
+          width="600px"
+        />
 
+        <!-- Display PDF -->
+        <object
+          *ngIf="fileType === 'pdf'"
+          [data]="backendUrl"
+          type="application/pdf"
+          width="100%"
+          height="600px"
+        >
+          Your browser does not support PDFs.
+        </object>
+      </div>
+      }
       <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions align="end">

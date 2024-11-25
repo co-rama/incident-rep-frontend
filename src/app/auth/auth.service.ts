@@ -52,6 +52,7 @@ export class AuthService {
     };
   }
   login(authData: Auth) {
+    console.log(authData);
     return this.httpService
       .post<AuthResponse>(`${this.url}/login`, {
         email: authData.email,
