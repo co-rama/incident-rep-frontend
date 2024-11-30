@@ -26,5 +26,6 @@
   { "id": 25, "name": "Tabora" },
   { "id": 26, "name": "Tanga" },
   { "id": 27, "name": "Unguja North" },
-  { "id": 28, "name": "Unguja South" }
+  { "id": 28, "name": "Unguja South" },
+  { "id": 29, "name": "Other" }
 ]
