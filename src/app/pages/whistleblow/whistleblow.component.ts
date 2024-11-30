@@ -37,7 +37,7 @@ export class WhistleblowComponent {
 
   // Material Table Implementation
   displayedColumns: string[] = [
-    'Taarifa',
+    'Information',
     'Reported ON',
     'Location',
     'Whistleblower',

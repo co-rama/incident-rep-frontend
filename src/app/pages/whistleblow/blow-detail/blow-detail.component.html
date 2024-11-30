@@ -4,26 +4,30 @@
   <mat-card class="incident-card">
     <mat-card-header>
       <mat-card-title
-        ><h6>
-          <strong>Jina la WhistleBlower: </strong>{{ blow().whistleblower }}
-        </h6>
-        <h6><strong>Namba ya Sima</strong> {{ blow().phone }}</h6>
-        <h6><strong>Barua Pepe:</strong>{{ blow().email }}</h6>
+        ><p>
+          <strong>Name of WhistleBlower: </strong>{{ blow().whistleblower }}
+        </p>
+        <p><strong>Phone:</strong> {{ blow().phone }}</p>
+        <p><strong>Email:</strong>{{ blow().email }}</p>
       </mat-card-title>
       <mat-card-subtitle>
-        <h6>
-          <strong>Imeripotiwa Mnamo:</strong>
+        <p>
+          <strong>Reported ON:</strong>
           {{ blow().createdAt | date : "short" }}
-        </h6>
+        </p>
       </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
-      <h6><strong>Sehemu:</strong> {{ blow().location }}</h6>
-      <h6><strong>Taarifa:</strong> {{ blow().taarifa }}</h6>
-      <h6><strong>Taarifa ya Ziada:</strong> {{ blow().taarifa_ziada }}</h6>
-      <h6><strong>Wahusika:</strong> {{ blow().wahusika }}</h6>
-      <h6><strong>Kiambatanisho:</strong></h6>
+      <p class="necessary-detail">
+        <strong>Location:</strong> {{ blow().location }}
+      </p>
+      <p class="necessary-detail">
+        <strong>Information:</strong> {{ blow().taarifa }}
+      </p>
+      <p><strong>Extra Information</strong> {{ blow().taarifa_ziada }}</p>
+      <p><strong>Suspects:</strong> {{ blow().wahusika }}</p>
+      <p><strong>Attachment:</strong></p>
       @if(blow().attachment){
       <div>
         <!-- Display Image (PNG, JPG) -->
@@ -31,8 +35,8 @@
           *ngIf="fileType === 'png' || fileType === 'jpg'"
           [src]="backendUrl"
           alt="Attachment"
-          height="700px"
-          width="600px"
+          height="450px"
+          width="450px"
         />
 
         <!-- Display PDF -->
@@ -40,8 +44,6 @@
           *ngIf="fileType === 'pdf'"
           [data]="backendUrl"
           type="application/pdf"
-          width="100%"
-          height="600px"
         >
           Your browser does not support PDFs.
         </object>
@@ -50,7 +52,15 @@
       <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-raised-button color="primary" (click)="close()">
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="printPage()"
+      >
+        <mat-icon>print</mat-icon> Print
+      </button>
+      <button type="button" mat-raised-button color="primary" (click)="close()">
         <mat-icon>close</mat-icon> Close
       </button>
     </mat-card-actions>

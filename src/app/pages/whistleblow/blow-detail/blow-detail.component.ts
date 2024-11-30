@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  NgZone,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MaterialImportModule } from '../../../shared/material-import.module';
 import { WhistleblowService } from '../../../services/whistleblow.service';
 import { DatePipe } from '@angular/common';
@@ -14,6 +21,7 @@ import { CommonModule } from '@angular/common';
 })
 export class BlowDetailComponent implements OnInit {
   private blowService = inject(WhistleblowService);
+  private ngZone = inject(NgZone);
   blow: any = this.blowService.loadClickedBlow;
   @Output() closeBlow = new EventEmitter<boolean>();
   backendUrl = `${environment.backendUrl}/`;
@@ -30,5 +38,10 @@ export class BlowDetailComponent implements OnInit {
     if (lastDotIndex === -1) return ''; // If no dot is found, return an empty string
     console.log(this.backendUrl);
     return this.backendUrl.substring(lastDotIndex + 1).toLowerCase(); // Get the substring after the last dot and convert to lowercase
+  }
+  printPage() {
+    this.ngZone.runOutsideAngular(() => {
+      window.print();
+    });
   }
 }
