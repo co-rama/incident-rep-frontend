@@ -1,1 +1,28 @@
 <h3>Analytics</h3>
+<!-- <div class="cards-container"> -->
+
+<!-- </div> -->
+@if(loadingState){
+<mat-card class="card">
+  <div class="mat-spinner">
+    <mat-spinner [diameter]="25" [strokeWidth]="2"></mat-spinner>
+  </div>
+</mat-card>
+}
+<div class="cards-container">
+  <mat-card
+    class="card"
+    *ngFor="let category of categories()"
+    [ngClass]="{ 'col-12': isSmallScreen(), 'col-6': !isSmallScreen() }"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ category }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card-content>
+        <canvas [id]="'chart' + category"></canvas>
+        <!-- Dynamic canvas id -->
+      </mat-card-content>
+    </mat-card-content>
+  </mat-card>
+</div>
